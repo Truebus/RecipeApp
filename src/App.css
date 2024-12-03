@@ -12,3 +12,16 @@
 #shadow {
     text-shadow: 2px 2px 2px yellow,2px 2px 4px red;
 }
+#li{
+    color: rgb(27, 27, 255);
+    font-size: 25px;
+    font-weight: 700;
+    font-style: normal;
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    text-shadow: 2px 2px 2px yellow,0px 0px 4px red;
+}
+ #li:hover{
+    transform: translate(-3px,-3px);
+    text-decoration-line: underline;
+    color: rgb(2, 160, 2);
+}
