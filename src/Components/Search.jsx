@@ -1,42 +1,24 @@
 import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 
 export const Search = () => {
   const [isLoading, setIsLoading] = useState(true);
-  const [storeData, setStoreData] = useState({ hits: [] });
+  const [storeData, setStoreData] = useState({ meals: [] });
   const [value, setValue] = useState('');
-  const [searchValue, setSearchValue] = useState('cake');
-
-  // API Key and ID
-  const myKey = import.meta.env.VITE_API_KEY;  // Ensure it's correct in your .env file
-  const myId = import.meta.env.VITE_API_ID;    // Ensure it's correct in your .env file
-
-  // Log the API key and ID for debugging
-  console.log('API Key:', myKey);
-  console.log('API ID:', myId);
+  const [searchValue, setSearchValue] = useState('');
 
   useEffect(() => {
     const handleData = async () => {
       try {
-        const apiUrl = `https://api.edamam.com/api/recipes/v2?q=${encodeURIComponent(searchValue)}&app_id=${myId}&app_key=${myKey}&type=public`;
-        console.log('API URL:', apiUrl); // Check the URL for correctness
-
-        const getData = await fetch(apiUrl);
-        console.log('Response Status:', getData.status);  // Log status code
-
+        const getData = await fetch(`https://www.themealdb.com/api/json/v1/1/search.php?s=${searchValue}`);
         if (!getData.ok) {
-          throw new Error(`Server Error: ${getData.statusText}`);
+          throw new Error(`Something went wrong`);
         }
 
         const response = await getData.json();
-        console.log('API Response:', response); // Log the response
-
-        if (response.hits) {
-          setStoreData(response);
-        } else {
-          throw new Error("No data found.");
-        }
+        setStoreData(response);
       } catch (err) {
-        console.error("Error fetching data:", err.message); // Log the error
+        console.error("Error fetching data:", err.message);
       } finally {
         setIsLoading(false);
       }
@@ -53,7 +35,7 @@ export const Search = () => {
     if (value.trim()) {
       setSearchValue(value);
     }
-    setValue('');
+    setValue(''); // Clear input field after search
   };
 
   const handleSubmit = (e) => {
@@ -68,10 +50,7 @@ export const Search = () => {
       ) : (
         <div className="p-[10px]">
           <div>
-            <form
-              className="flex justify-center mt-[30px] p-1 gap-x-5"
-              onSubmit={handleSubmit}
-            >
+            <form className="flex justify-center mt-[30px] p-1 gap-x-5" onSubmit={handleSubmit}>
               <input
                 type="text"
                 placeholder="Enter Here"
@@ -81,17 +60,30 @@ export const Search = () => {
               />
               <button
                 type="submit"
-                className="bg-gradient-to-tr from-yellow-400 to-orange-500 p-2 font-bold text-white rounded-lg hover:scale-105 5s ease-linear"
+                className="bg-gradient-to-tr from-yellow-400 to-orange-500 p-2 font-bold text-white rounded-lg hover:scale-105 ease-linear"
               >
                 Search
               </button>
             </form>
           </div>
-          <div>
-            {storeData.hits.length > 0 ? (
-              storeData.hits.map((item, index) => (
-                <div className="h-[300px] w-[250px] border-2 border-black p-1" key={index}>
-                  <h1>{item.recipe.label}</h1>
+
+          <div className="flex flex-wrap justify-around mt-[20px] gap-y-5 p-2">
+            {storeData.meals.length > 0 ? (
+              storeData.meals.map((item, index) => (
+                <div
+                  className="h-[300px] w-[250px] border-2 border-gray-600 rounded-xl font-serif text-xl font-bold text-blue-800 p-[10px]
+                  shadow-lg shadow-gray-500 hover:scale-105 10s ease-linear"
+                  key={index}
+                >
+                  <h1 className="text-center">{item.strMeal}</h1>
+                  
+                  <Link to={`/recipe/${item.idMeal}`}>
+                    <img
+                      src={item.strMealThumb}
+                      alt={item.strMeal}
+                      className="rounded-lg"
+                    />
+                  </Link>
                 </div>
               ))
             ) : (

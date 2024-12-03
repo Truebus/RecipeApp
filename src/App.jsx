@@ -4,6 +4,7 @@ import { NavBar } from './Components/NavBar'
 import { Home } from './Components/Home'
 import { Footer } from './Components/Footer'
 import { Search } from './Components/Search'
+import { DetailPage } from './Components/DetailPage'
 
 function App() {
 
@@ -14,6 +15,7 @@ function App() {
       <Routes>
         <Route path='/' element={<Home/>}/>
         <Route path='/search' element={<Search/>}/>
+        <Route path='/recipe/:idMeal' element={<DetailPage/>}/>
       </Routes>
       <Footer/>
       </BrowserRouter>
