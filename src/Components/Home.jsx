@@ -1,6 +1,10 @@
+import { useContext } from "react"
+import Theme from "../Context/ContextLight"
+
 export const Home=()=>{
+    const{modevalue} = useContext(Theme)
     return(
-        <div className="h-[500px] w-full bg-gradient-to-r from-white to-gray-100">
+        <div className={`h-[500px] w-full ${modevalue==='light'?'bg-gradient-to-r from-white to-gray-100':'bg-black text-white'}`}>
             <div className="relative">
                 <img src="https://img.freepik.com/premium-vector/happy-kids-jogging-healthy-cartoon-character-children-running-illustration-isolated-white_83111-437.jpg?w=2000" alt="image not available"
                 className="h-[400px] w-[400px] absolute top-[100px]" id="running"/>

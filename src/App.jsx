@@ -5,11 +5,13 @@ import { Home } from './Components/Home'
 import { Footer } from './Components/Footer'
 import { Search } from './Components/Search'
 import { DetailPage } from './Components/DetailPage'
+import { HandleMode } from './Context/ContextLight'
 
 function App() {
 
   return (
     <div>
+      <HandleMode>
       <BrowserRouter>
       <NavBar/>
       <Routes>
@@ -19,6 +21,7 @@ function App() {
       </Routes>
       <Footer/>
       </BrowserRouter>
+      </HandleMode>
     </div>
   )
 }

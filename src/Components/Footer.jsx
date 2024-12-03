@@ -2,10 +2,13 @@ import { FaInstagramSquare } from "react-icons/fa";
 import { FaSquareTwitter } from "react-icons/fa6";
 import { FaFacebookSquare } from "react-icons/fa";
 import { FaYoutube } from "react-icons/fa";
+import { useContext } from "react";
+import Theme from "../Context/ContextLight";
 
 export const Footer=()=>{
+    const{modevalue} = useContext(Theme);
     return(
-        <div className="h-[300px] w-full p-[5px]">
+        <div className={`h-[300px] w-full p-[5px] ${modevalue==='light'?'bg-sky-300':'bg-black text-white'}`}>
         <h1 className="text-left ml-[110px] mt-[20px] text-red-600 font-bold font-serif text-3xl">Recipe</h1>
             <div className="flex justify-around p-[10px]">
                 <ul className="text-lg cursor-pointer">

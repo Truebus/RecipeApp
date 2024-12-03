@@ -1,11 +1,15 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import { useContext } from "react";
+import Theme from "../Context/ContextLight";
+import { FcSearch } from "react-icons/fc";
 
 export const Search = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [storeData, setStoreData] = useState({ meals: [] });
   const [value, setValue] = useState('');
   const [searchValue, setSearchValue] = useState('');
+  const {modevalue} = useContext(Theme);
 
   useEffect(() => {
     const handleData = async () => {
@@ -48,16 +52,16 @@ export const Search = () => {
       {isLoading ? (
         <div>Loading.......</div>
       ) : (
-        <div className="p-[10px]">
+        <div className={`${modevalue==='light'?'bg-amber-200':'bg-black text-white'} p-[10px]`}>
           <div>
-            <form className="flex justify-center mt-[30px] p-1 gap-x-5" onSubmit={handleSubmit}>
+            <form className="flex justify-center mt-[30px] p-1" onSubmit={handleSubmit}>
               <input
                 type="text"
                 placeholder="Enter Here"
                 value={value}
                 onChange={handleValue}
                 className="rounded-xl p-2 w-[400px] outline-none border-2 border-gray-600"
-              />
+              /><FcSearch className="relative top-[13px] left-[-50px] text-xl"/>
               <button
                 type="submit"
                 className="bg-gradient-to-tr from-yellow-400 to-orange-500 p-2 font-bold text-white rounded-lg hover:scale-105 ease-linear"

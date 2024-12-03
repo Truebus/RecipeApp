@@ -1,12 +1,14 @@
 import { useState, useEffect } from "react"
 import { useParams } from "react-router-dom"
+import { useContext } from "react";
+import Theme from "../Context/ContextLight";
 
 export const DetailPage = () => {
     const [storedata, setStoreData] = useState({ meals: [] });
     const [isLoading, setIsLoading] = useState(true);
     const { idMeal } = useParams();
     const [tabvalue, setTabValue] = useState('overview');
-
+    const {modevalue} = useContext(Theme)
 
     useEffect(() => {
         const HandleData = async () => {
@@ -37,7 +39,7 @@ export const DetailPage = () => {
             {isLoading ? (
                 <div>Loading.....</div>
             ) : (
-                <div>
+                <div className={`${modevalue==='light'?'bg-blue-400':'bg-black text-white'}`}>
                     {storedata.meals.length > 0 ? (
                         storedata.meals.map((item) => (
                             <div key={item.idMeal} className="h-auto w-full p-[15px]">
@@ -45,7 +47,7 @@ export const DetailPage = () => {
                                 <div className="mt-[30px] ml-[30px]">
                                     <ul className="flex gap-x-5 cursor-pointer">
                                         <li className={tabvalue === 'overview'} onClick={() => HandleTab('overview')} id="li">Overview</li>
-                                        <li className={tabvalue === 'ingradients'} onClick={() => HandleTab('ingradients')} id="li">ingradients List</li>
+                                        <li className={tabvalue === 'ingradients'} onClick={() => HandleTab('ingradients')} id="li">Ingredients List</li>
                                         <li className={tabvalue === 'view'} onClick={() => HandleTab('view')} id="li">Watch Here</li>
                                         <li className={tabvalue === 'instruct'} onClick={() => HandleTab('instruct')} id="li">Instructions</li>
                                     </ul>
@@ -65,7 +67,16 @@ export const DetailPage = () => {
                                     )}
                                     {tabvalue === 'ingradients' && (
                                         <div className="ml-[30px] mt-[10px]">
-                                            <h1>Ingradients</h1>
+                                            <h1 className="font-bold underline text-2xl mb-[10px]">Ingredients List</h1>
+                                            <ul className="flex flex-col gap-y-3">
+                                                {Object.keys(item).filter(key=>key.startsWith('strIngredient')&&item[key])
+                                                .map((ingrad,index)=>{
+                                                    const data = item[ingrad];
+                                                    return data?(
+                                                    <li key={index}>{data}</li>
+                                                    ):null;
+                                                })}
+                                            </ul>
                                         </div>
                                     )}
                                     {tabvalue === 'view' && (
@@ -73,10 +84,10 @@ export const DetailPage = () => {
                                             <h1 className="font-bold text-2xl">You are able to Watch Recipe</h1>
                                             <h1 className="font-bold text-xl">Watch Video:-</h1>
                                             {item.strYoutube && (
-                                                <div className="relative pb-[56.25%] w-full h-0 overflow-hidden">
+                                                <div className="relative pb-[56.25%] w-full h-0 overflow-hidden mt-3">
                                                     <iframe
                                                         className="absolute top-0 left-0 w-full h-full"
-                                                        style={{ height: '400px',width: '700px' }}
+                                                        style={{ height: '350px', width: '700px' }}
                                                         src={`https://www.youtube.com/embed/${item.strYoutube.split("v=")[1]}`}
                                                         title="YouTube video player"
                                                         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
@@ -88,7 +99,8 @@ export const DetailPage = () => {
                                     )}
                                     {tabvalue === 'instruct' && (
                                         <div className="ml-[30px] mt-[10px]">
-                                            kjhuyg
+                                            <h1 className="font-bold text-xl underline mb-[10px]">Instructions:-</h1>
+                                            <h2 className="text-pretty">{item.strInstructions}</h2>
                                         </div>
                                     )}
                                 </div>

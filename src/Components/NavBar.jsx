@@ -1,8 +1,14 @@
 import { Link } from "react-router-dom"
+import Theme from "../Context/ContextLight"
+import { useContext } from "react"
+import { FaSun } from "react-icons/fa";
+import { IoMoon } from "react-icons/io5";
+
 export const NavBar=()=>{
+   const {modevalue,Handle} = useContext(Theme);
     return(
         <div>
-            <div className="bg-amber-200 text-xl flex justify-around items-center p-[10px] font-extrabold font-serif text-blue-800"
+            <div className={`${modevalue==='light'?'bg-amber-200':'bg-black text-white'} text-xl flex justify-around items-center p-[10px] font-extrabold font-serif text-blue-800`}
             id="shadow">
                 <h1>Recipe App</h1>
                 <ul className="inline-flex gap-x-4 ml-5">
@@ -13,7 +19,7 @@ export const NavBar=()=>{
                 <h2 className="hover:bg-amber-100 p-1 rounded-xl cursor-pointer">Sign In</h2>
                 <h2 className="hover:bg-amber-100 p-1 rounded-xl cursor-pointer">Sign Up</h2>
                 <h2 className="hover:bg-amber-100 p-1 rounded-xl cursor-pointer">Add Cart</h2>
-                <h2 className="cursor-pointer">Light</h2>
+                <h2 className="cursor-pointer mt-2" onClick={Handle}>{modevalue==='light'?<IoMoon />:<FaSun />}</h2>
                 </div>
             </div>
         </div>
