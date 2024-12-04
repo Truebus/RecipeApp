@@ -16,9 +16,6 @@ export const NavBar=()=>{
                     <li className="hover:bg-amber-100 p-1 rounded-xl cursor-pointer"><Link to={'/search'}>Search</Link></li>
                 </ul>
                 <div className="inline-flex gap-x-5">
-                <h2 className="hover:bg-amber-100 p-1 rounded-xl cursor-pointer">Sign In</h2>
-                <h2 className="hover:bg-amber-100 p-1 rounded-xl cursor-pointer">Sign Up</h2>
-                <h2 className="hover:bg-amber-100 p-1 rounded-xl cursor-pointer">Add Cart</h2>
                 <h2 className="cursor-pointer mt-2" onClick={Handle}>{modevalue==='light'?<IoMoon />:<FaSun />}</h2>
                 </div>
             </div>
